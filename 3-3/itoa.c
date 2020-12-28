@@ -1,84 +1,106 @@
+/*
+Code to test the itoa function.
+This is my solultion to Exercise 3-3 of "The C Programming Language"
+by Brian W. Kernighan and Dennis M. Ritchie.
+*/
+
 #include<stdio.h>
+#include<stdlib.h>
 
 #define MAX 100
+#define LOWLIMIT -2147483648
+#define HIGHLIMIT 2147483647
 
 char s[MAX];
 
-void itoa(int n, char* s);
+// Function declaration
+int itoa(int n, char* s);
 void reverse(char* s);
-
 
 int main(void)
 {
-  itoa(-2147483648, s);
-  //itoa(-1, s);
+  // Convert an integer to a string representation
+  for(int i = LOWLIMIT; i <= HIGHLIMIT; i++)
+  {
+    itoa(i, s);
 
-  puts(s);
+    puts(s);
+  }
+
+  return EXIT_SUCCESS;
 }
 
-void itoa(int n, char* s)
+
+// Integer argument is converted to a string representation
+int itoa(int n, char* s)
 {
   int i, sign;
+  int max = 1;
+  int temp = 1;
+
+  // Left shift to get max possible size for input int
+  for(i=0 ; temp>0; i++)
+  {
+    max = temp;
+    temp = (temp << 1) + 1;
+  }
+
+  // Check if input is greater in magnitude than max value for positive
+  // integer. If so, then return max negative.
+  if(((sign = n) < 0) && ((-max) > n))
+  {
+    sprintf(s, "-2147483648");
+
+    return EXIT_SUCCESS;
+
+  } else if((sign = n) < 0)
+  {
+    n = -n;
+  }
 
   i = 0;
 
-  //if negative number then find 1's compliment and get "LSB char"
-  if((sign = n) < 0)
-  {
-    n = (~n);
-
-    // 1's compliment adds one so use '1' char to make this up
-    s[i++] = n % 10 +'1';
-  }
-
-  while((n /= 10) > 0)
+  // Find remainder of division by 10 and add to ASCII code offset for
+  // numeric symbols.
+  // While there is still another order of magnitude, repeat the loop.
+  do
   {
     s[i++] = n % 10 + '0';
-  }
+  } while((n /= 10) > 0);
 
+  // If the number was negative, then add a hyphen to the array.
   if(sign < 0)
   {
     s[i++] = '-';
   }
+  // Add end of string character.
   s[i] = '\0';
 
   reverse(s);
+
+  return EXIT_SUCCESS;
 }
 
-
+// Reverse a string of input chars
 void reverse(char* s)
 {
   int i, j;
   char temp[MAX];
 
-  // Get string length i
-  puts("getting string length!");
-
-  for(i=0; s[i]!='\0'; i++)
-  {
-    putchar(s[i]);
-  }
+  // Get length of input string
+  for(i=0; s[i]!='\0'; i++);
 
   // Copy to reverse to temporary string
-
-  puts("\nreversing to temp string!");
   for(j=0; j<=i; j++)
   {
     temp[j] = s[i-(j+1)];
-
-    putchar(temp[j]);
   }
 
   temp[j] = '\0';
 
   // Copy reversed string back to original
-
-  puts("\nCopying reversed string! ");
   for(i=0; temp[i]!='\0'; i++)
   {
     s[i] = temp[i];
-
-    putchar(s[i]);
   }
-  puts("\nFunction finished!");
 }
