@@ -2,6 +2,7 @@
 
 #include<stdio.h>
 #include<stdlib.h>
+#include"stack.h"
 
 #define MAXOP 20
 #define NUMBER '0'
@@ -15,10 +16,10 @@ int main(void)
   double op2;
 
   //Function declaration
-  double atof();
-  double pop();
-  double push();
-  void clear();
+  //double atof();
+  //double pop();
+  //double push();
+  //void clear();
 
   int getop(char* s, int lim);
 
@@ -62,11 +63,15 @@ int main(void)
         if(op2 != 0.0)
         {
           double result;
-          result = (double)((int)op2 % (int)pop());
+          result = (double)((int)pop() % (int)op2);
           push(result);
         } else {
           printf("zero divisor popped\n");
         }
+        break;
+      case '&':
+        puts("ERASE TOP STACK ENTRY");
+        pop();
         break;
       case '=':
         puts("EQUALS");
