@@ -15,11 +15,8 @@ int main(void)
   char s[MAXOP];
   double op2;
 
-  //Function declaration
-  //double atof();
-  //double pop();
-  //double push();
-  //void clear();
+  // Calculator memory
+  double v;
 
   int getop(char* s, int lim);
 
@@ -84,6 +81,14 @@ int main(void)
       case TOOBIG:
         puts("TOO BIG");
         printf("%.20s ... is too long\n", s);
+        break;
+      case 'v':
+        puts("VARIBLE V");
+        v = push(pop());
+        break;
+      case 'V':
+        puts("USING VALUE STORED IN V");
+        push(v);
         break;
       default:
         printf("unknown command %c\n", type);

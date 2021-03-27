@@ -2,30 +2,26 @@
 #include<stdlib.h>
 #include"buffer.h"
 
-void ungets(char* s);
+int ungets(char* s);
 
 int main(void)
 {
   char c;
-  char s[10];
+  char s[12];
 
-  int i;
+  int i, d;
 
   for(i=0; i<10; i++)
   {
     s[i] = i + '0';
   }
+  s[++i] = 'a';
+  s[++i] = '\t';
   s[++i] = '\0';
 
+  d = ungets(s);
 
-  ungetch('\n');
-  ungetch('o');
-  ungetch('l');
-  ungetch('l');
-  ungetch('e');
-  ungetch('h');
-
-  ungets(s);
+  printf("number of chars put on buffer: %d\n", d);
 
   while((c = getch())!='\0')
   {
@@ -34,13 +30,16 @@ int main(void)
 }
 
 // Put a string into the buffer
-void ungets(char* s)
+int ungets(char* s)
 {
-  for(int i=0; s[i]!='\0'; i++)
+ int i;
+
+  for(i=0; s[i]!='\0'; i++)
   {
     if(ungetch(s[i]) == EXIT_FAILURE)
     {
       break;
     }
   }
+  return i;
 }
