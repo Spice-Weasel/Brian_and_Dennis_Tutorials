@@ -1,6 +1,5 @@
 #include<stdio.h>
 
-void itoa_r(int idx, int n, char* s2);
 void itoa(int n, char* s2);
 
 int main(void)
@@ -12,34 +11,10 @@ int main(void)
  
  scanf("%d", &number);
 
- itoa_r(1, number, string);
+ itoa(number, string);
 
  printf("String = %s\n", string);
 }
-
-void itoa_r(int idx, int number, char* s2)
-{
-    int remainder, t;
-    int i = 0;
-
-    remainder = number % (10*idx);
-
-    t = number - remainder;
-
-    printf("idx = %d, r = %d\n", idx, remainder);
-
-    s2[i++] = remainder + 48;
-
-    idx *= 10;
-
-    if(t >= 10)
-    {
-        itoa_r(idx, number, s2);
-    }
-
-    s2[i] = '\0';
-}
-
 
 
 void itoa(int n, char* s2)
