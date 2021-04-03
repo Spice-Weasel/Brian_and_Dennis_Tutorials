@@ -22,6 +22,7 @@ int reverse(int i, char* s1, char* s2)
     static int length;
     static int j;
 
+    // if not the end of string then call self again and increment string length
     if(s1[i]!='\0')
     {
         reverse(++i, s1, s2);
@@ -36,7 +37,9 @@ int reverse(int i, char* s1, char* s2)
     } else {
 
         length = i;
+
         s2[length] = '\0';
+
         length--;
         j = 0;
     }
