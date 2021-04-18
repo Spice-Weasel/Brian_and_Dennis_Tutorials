@@ -1,5 +1,7 @@
 #include<stdio.h>
 
+#define COPYSTRING(a, b) strcopy(a, b)
+
 void stringcat(char* s1, char* s2);
 
 void strcopy(char* s1, char* s2);
@@ -13,8 +15,10 @@ int main(int argc, char* argv[])
     {
         printf("Argument %d : %s\n", i, argv[i]);
     }
-    strcopy(argv[1], s1);
-    strcopy(argv[2], s2);
+    COPYSTRING(argv[1], s1);
+    COPYSTRING(argv[2], s2);
+    //strcopy(argv[1], s1);
+    //strcopy(argv[2], s2);
 
     printf("s1 = %s\n", s1);
     printf("s2 = %s\n", s2);

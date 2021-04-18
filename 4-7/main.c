@@ -1,7 +1,7 @@
 #include<stdio.h>
 
-int itoa_r(int i, int n, char *s2);
-void itoa(int n, char *s2);
+void itoa_r(int idx, int n, char* s2);
+void itoa(int n, char* s2);
 
 int main(void)
 {
@@ -12,36 +12,32 @@ int main(void)
  
  scanf("%d", &number);
 
- itoa_r(0, number, string);
+ itoa_r(1, number, string);
 
- printf("%s\n", string);
+ printf("String = %s\n", string);
 }
 
-int itoa_r(int idx, int number, char *s2)
+void itoa_r(int idx, int number, char* s2)
 {
-    int remainder;
+    int remainder, t;
+    int i = 0;
 
-    // get least significan decimel place here
-    remainder = number % (10);
+    remainder = number % (10*idx);
 
-    number *= 0.1;
+    t = number - remainder;
 
+    s2[i++] = remainder + 48;
 
-    if(number >= 10)
+    printf("idx = %d, r = %d,  c= %c\n", idx, remainder, s2[i-1]);
+
+    idx *= 10;
+
+    if(t >= 10)
     {
-        idx = itoa_r(idx, number, s2);
-        if(idx == 0)
-        {
-            s2[idx++] ='\0';
-        }
-        s2[idx] = remainder + 48;
-
-    } else {
-        s2[idx] = number + 48;
-        s2[++idx] = remainder + 48;
+        itoa_r(idx, number, s2);
     }
 
-    return ++idx;
+    s2[i] = '\0';
 }
 
 
